@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core_Mesh">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{bd211b8f-367c-4e2f-99a3-c648c74959e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shortestpath">
+      <UniqueIdentifier>{6527853d-a296-4edd-9ff9-865f977534d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core_Mesh\Edge.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Face.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Halfedge.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Iterators.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Loop.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Mesh.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Point.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core_Mesh\Vertex.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="BMP\BmpReader.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="BMP\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Core_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="shortestpath.h">
+      <Filter>shortestpath</Filter>
+    </ClInclude>
+    <ClInclude Include="zerocochain.h">
+      <Filter>shortestpath</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core_Mesh\Halfedge.cpp">
+      <Filter>Core_Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Core_Mesh\Mesh.cpp">
+      <Filter>Core_Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Core_Mesh\Vertex.cpp">
+      <Filter>Core_Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="shortestpath.cpp">
+      <Filter>shortestpath</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
