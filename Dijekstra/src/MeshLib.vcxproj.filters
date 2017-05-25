@@ -6,10 +6,7 @@
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Texture">
-      <UniqueIdentifier>{bd211b8f-367c-4e2f-99a3-c648c74959e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shortestpath">
-      <UniqueIdentifier>{6527853d-a296-4edd-9ff9-865f977534d6}</UniqueIdentifier>
+      <UniqueIdentifier>{09adf47a-e4b5-4409-95ff-df14e4a903d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,10 +44,10 @@
       <Filter>Core_Mesh</Filter>
     </ClInclude>
     <ClInclude Include="shortestpath.h">
-      <Filter>shortestpath</Filter>
+      <Filter>Core_Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="zerocochain.h">
-      <Filter>shortestpath</Filter>
+    <ClInclude Include="dirent.h">
+      <Filter>Core_Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,8 +62,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="shortestpath.cpp">
-      <Filter>shortestpath</Filter>
-    </ClCompile>
+    <ClCompile Include="shortestpath.cpp" />
   </ItemGroup>
 </Project>

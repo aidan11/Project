@@ -101,9 +101,9 @@
     <ClInclude Include="Core_Mesh\Mesh.h" />
     <ClInclude Include="Core_Mesh\Point.h" />
     <ClInclude Include="Core_Mesh\Vertex.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="shortestpath.h" />
-    <ClInclude Include="zerocochain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core_Mesh\Halfedge.cpp" />

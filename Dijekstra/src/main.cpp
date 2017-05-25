@@ -5,8 +5,21 @@
 #include<map>
 #include <queue>
 
+#include "shortestpath.h"
+#include <vector>
+#include <string>
+#include <iostream>
+
+//you need to change that to your local folder
+#include <C:\project with Aiden and Lukas\Project\Dijekstra\src\dirent.h>
+#include <errno.h>
+#include <math.h>
+#include <sstream>
+
 
 using namespace XMeshLib;
+
+using namespace std;
 
 Renderer theRenderer;
 std::map<Vertex*, double>renderingscalarmap;
@@ -32,73 +45,241 @@ std::vector<Vertex*> landmark(Mesh * mesh, int n);
 
 
 
+bool write_DJdistancematrix_tohd_1(Mesh* cmesh, const char outFile[])
+{
+	FILE * fp = fopen(outFile, "w");
+	if (!fp)
+	{
+		printf("Cannot open file %s to write\n", outFile);
+		return false;
+	}
+
+	std::vector<Vertex*> allver;
+	for (MeshVertexIterator fit(cmesh); !fit.end(); ++fit)
+	{
+		allver.push_back(*fit);
+	}
+	int k = 0;
+
+	shortestpath * Shortpath = new shortestpath;
+	Shortpath->cmesh = cmesh;
+	Shortpath->SetEdgesWeight();
+
+	for (int i = 0; i < allver.size(); i++)
+	{
+		Vertex* ver = allver[i];
+		Shortpath->source = ver;
+
+		Shortpath->getgeodesicfunction();
+		for (int j = 0; j < allver.size(); j++)
+		{
+			Vertex* ver1 = allver[j];
+			double val = Shortpath->D[ver1];
+			std::ostringstream oss;
+			oss.precision(5);
+			oss.setf(std::ios::fixed, std::ios::floatfield);
+			if (j == allver.size() - 1)
+				oss << val;
+			else
+				oss << val << " ";
+
+
+			fprintf(fp, "%s ", oss.str().c_str());
+
+
+		}
+		if (i == allver.size() - 1)
+			continue;
+		else
+			fprintf(fp, "\n");
+	}
+
+	std::cout << "Done DDM!";
+	fclose(fp);
+	return 1;
+}
+
+bool write_sumesh_DJdistancematrix_tohd_1(Mesh* cmesh, std::vector<Vertex*> landmarkmesh, const char outFile[])
+{
+	FILE * fp = fopen(outFile, "w");
+	if (!fp)
+	{
+		printf("Cannot open file %s to write\n", outFile);
+		return false;
+	}
+
+	std::vector<Vertex*> allver = landmarkmesh;
+
+	int k = 0;
+
+	shortestpath * Shortpath = new shortestpath;
+	Shortpath->cmesh = cmesh;
+	Shortpath->SetEdgesWeight();
+
+	for (int i = 0; i < allver.size(); i++)
+	{
+		Vertex* ver = allver[i];
+		Shortpath->source = ver;
+
+		Shortpath->getgeodesicfunction();
+		for (int j = 0; j < allver.size(); j++)
+		{
+			Vertex* ver1 = allver[j];
+			double val = Shortpath->D[ver1];
+			std::ostringstream oss;
+			oss.precision(5);
+			oss.setf(std::ios::fixed, std::ios::floatfield);
+			if (j == allver.size() - 1)
+				oss << val;
+			else
+				oss << val << " ";
+
+
+			fprintf(fp, "%s ", oss.str().c_str());
+
+
+		}
+		if (i == allver.size() - 1)
+			continue;
+		else
+			fprintf(fp, "\n");
+	}
+
+	std::cout << "Done DDM!";
+	fclose(fp);
+	return 1;
+}
+
+
+
+
+
+
+bool write_Edistancematrix_tohd_1(Mesh* cmesh, const char outFile[])
+{
+	FILE * fp = fopen(outFile, "w");
+	if (!fp)
+	{
+		printf("Cannot open file %s to write\n", outFile);
+		return false;
+	}
+
+	std::vector<Vertex*> allver;
+	for (MeshVertexIterator fit(cmesh); !fit.end(); ++fit)
+	{
+		allver.push_back(*fit);
+	}
+
+
+	for (int i = 0; i < allver.size(); i++)
+	{
+		Vertex* ver = allver[i];
+		Point p = ver->point();
+
+		for (int j = 0; j < allver.size(); j++)
+		{
+			Vertex* ver1 = allver[j];
+			Point p1 = ver1->point();
+			double val = (p - p1).norm();
+			std::ostringstream oss;
+			oss.precision(5);
+			oss.setf(std::ios::fixed, std::ios::floatfield);
+			if (j == allver.size() - 1)
+				oss << val;
+			else
+				oss << val << " ";
+
+
+			fprintf(fp, "%s ", oss.str().c_str());
+
+
+		}
+		if (i == allver.size() - 1)
+			continue;
+		else
+			fprintf(fp, "\n");
+	}
+
+	std::cout << "Done EDM!";
+	fclose(fp);
+	return 1;
+}
+
+bool write_sumesh_Edistancematrix_tohd_1(Mesh* cmesh, std::vector<Vertex*> landmarkmesh, const char outFile[])
+{
+	FILE * fp = fopen(outFile, "w");
+	if (!fp)
+	{
+		printf("Cannot open file %s to write\n", outFile);
+		return false;
+	}
+
+	std::vector<Vertex*> allver = landmarkmesh;
+
+
+
+	for (int i = 0; i < allver.size(); i++)
+	{
+		Vertex* ver = allver[i];
+		Point p = ver->point();
+
+		for (int j = 0; j < allver.size(); j++)
+		{
+			Vertex* ver1 = allver[j];
+			Point p1 = ver1->point();
+			double val = (p - p1).norm();
+			std::ostringstream oss;
+			oss.precision(5);
+			oss.setf(std::ios::fixed, std::ios::floatfield);
+			if (j == allver.size() - 1)
+				oss << val;
+			else
+				oss << val << " ";
+
+
+			fprintf(fp, "%s ", oss.str().c_str());
+
+
+		}
+		if (i == allver.size() - 1)
+			continue;
+		else
+			fprintf(fp, "\n");
+	}
+
+	std::cout << "Done EDM!";
+	fclose(fp);
+	return 1;
+}
+
+
+
+
+
+
+
+
+int getdir(string dir, vector<string> &files)
+{
+	DIR *dp;
+	struct dirent *dirp;
+	if ((dp = opendir(dir.c_str())) == NULL) {
+		cout << "Error(" << errno << ") opening " << dir << endl;
+		return errno;
+	}
+
+	while ((dirp = readdir(dp)) != NULL) {
+		files.push_back(string(dirp->d_name));
+	}
+	closedir(dp);
+	return 0;
+}
+
+
+
 
 ///////
 
-
-void KeyBoardB(unsigned char key, int x, int y)
-{
-
-	switch (key)
-	{
-	case 'f':
-		//Flat Shading
-		glPolygonMode(GL_FRONT, GL_FILL);
-		break;
-	case 's':
-		//Smooth Shading
-		glPolygonMode(GL_FRONT, GL_FILL);
-		break;
-	case 'w':
-		//Wireframe mode
-		glPolygonMode(GL_FRONT, GL_LINE);
-		break;
-	case '+':
-		//Wireframe mode
-		multiplier = multiplier + 0.1;
-		break;
-	case '-':
-		//Wireframe mode
-		multiplier = multiplier - 0.1;
-		break;
-	case 'a':
-		//Wireframe mode
-		shift = shift + 0.01;
-		break;
-	case 'z':
-		//Wireframe mode
-		shift = shift - 0.01;
-		break;
-
-	case 27:
-		exit(0);
-		break;
-	}
-	glutPostRedisplay();
-}
-
-void renderScene(void) 
-{
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPushMatrix();
-	theRenderer.UpdateEye();
-	// begin drawing things here
-
-	theRenderer.RenderMesh(renderingscalarmap, multiplier,shift);//this function draws the mesh into the screen
-
-	
-
-	//end drawing things here
-	glutSwapBuffers();
-	glPopMatrix();
-
-}
-void mouseMove(int x, int y){theRenderer.MouseMove(x,y);}
-void mouseClick(int button , int state, int x, int y){theRenderer.MouseClick(button, state, x, y);}
-void reshapeScene(GLsizei width, GLsizei height){theRenderer.ReshapeScene(width, height);}
-//void keyBoard(unsigned char key, int x, int y){theRenderer.KeyBoard(key,x,y);} 
-void keyBoard(unsigned char key, int x, int y){ KeyBoardB(key, x, y); }
 
 
 
@@ -106,40 +287,68 @@ void keyBoard(unsigned char key, int x, int y){ KeyBoardB(key, x, y); }
 int main(int argc, char **argv) {
 	
 	
-	if(!srcMesh->read("eight.m")) {
-		delete srcMesh;
-		exit(-1);
-	};
+//	if(!srcMesh->read("eight.m")) {
+//		delete srcMesh;
+//		exit(-1);
+//	};
 
+
+	string absolute_path = "C:/project with Aiden and Lukas/Project/Dijekstra/src/"; //PATH SPECIFIC
+
+	string dir = string(absolute_path + "Meshs");   //PATH SPECIFIC
+	vector<string> files = vector<string>();
+
+	getdir(dir, files);
+
+	for (int f = 2; f < files.size(); f++)
+	{
+
+		Mesh *srcMesh = new Mesh;
 
 	
 
-	
-	//do not change this part 
 
-	//openGL standard commands
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
-	glutInitWindowPosition(theRenderer.win_x,theRenderer.win_y);
-	glutInitWindowSize(theRenderer.win_width, theRenderer.win_height);
-	glutCreateWindow("Test");
-	glutDisplayFunc(renderScene);
-	glutReshapeFunc(reshapeScene);
-	glutMouseFunc(mouseClick);
-	glutMotionFunc(mouseMove);
-	glutKeyboardFunc(keyBoard);
+		string full_file_in = absolute_path + "Meshs/" + files[f];   //PATH SPECIFIC
 
 
-	theRenderer.SetMesh(srcMesh);
-	theRenderer.InitGL();
-	///////////////////////////////
-	theRenderer.LoadTexture("color_strip.bmp"); //this command loads a texture from the HD and maps it into the UV space 	
+		const char * file_in = full_file_in.c_str();
 
-	glutMainLoop();
+		if (!srcMesh->read(file_in))
+		{
+			delete srcMesh;
+			exit(-1);
+		}
 
-	delete srcMesh; srcMesh = NULL;
+		std::vector<Vertex*> landmarkmesh = landmark(srcMesh,8);
 
+
+		for (int i = 0; i < 2; i++)
+		{
+			files[f].pop_back();
+		}
+
+
+
+		//string full_file_out_edm = absolute_path + "Distance Matrices/EDMS/" + files[f] + "_EDM.txt";  //PATH SPECIFIC
+		string full_file_out_ddm = absolute_path + "Distance Matrices/DDMS/" + files[f] + "_DDM.txt";  //PATH SPECIFIC
+
+
+
+		//const char * file_out_edm = full_file_out_edm.c_str();
+		const char * file_out_ddm = full_file_out_ddm.c_str();
+
+		write_sumesh_DJdistancematrix_tohd_1(srcMesh, landmarkmesh, file_out_ddm);
+		//write_sumesh_Edistancematrix_tohd_1(srcMesh, landmarkmesh, file_out_edm);
+
+
+		srcMesh->clear();
+
+	}
 	return 0;
+
+
+	
+
 }
 
 
@@ -148,7 +357,7 @@ int main(int argc, char **argv) {
 
 double vertextomeshdistance(std::vector<Vertex*> submesh, Vertex * v)
 {
-	double d = -1;
+	double d = INFINITY;
 	for (int i = 0; i < submesh.size(); i++)
 	{
 		double d1 = (submesh[i]->point() - v->point()).norm();
@@ -160,10 +369,10 @@ double vertextomeshdistance(std::vector<Vertex*> submesh, Vertex * v)
 	return d;
 }
 
-Vertex * meshdistance(Mesh *mesh, std::vector<Vertex*>  submesh)
+Vertex * meshdistance(Mesh *mesh, std::vector<Vertex*> submesh)
 {
 	Vertex *outV = submesh[0];
-	double d = -INFINITE;
+	float d = -INFINITY;
 	for (MeshVertexIterator vvit(mesh); !vvit.end(); ++vvit)
 	{
 		Vertex *v = *vvit;
@@ -179,21 +388,23 @@ Vertex * meshdistance(Mesh *mesh, std::vector<Vertex*>  submesh)
 			}
 		}
 
-
-		return outV;
-
 	}
 
-
+	return outV;
 
 }
 
 std::vector<Vertex*> landmark(Mesh * mesh, int n)
 {
+
 	std::vector < Vertex* > out;
 	MeshVertexIterator viter(mesh);
 
 	Vertex * v = *viter;
+
+
+
+
 
 	out.push_back(v);
 
@@ -203,6 +414,7 @@ std::vector<Vertex*> landmark(Mesh * mesh, int n)
 		Vertex * v1 = meshdistance(mesh, out);
 
 		out.push_back(v1);
+
 	}
 	return out;
 }
