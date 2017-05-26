@@ -1,6 +1,5 @@
 #include <cstdlib>
-#include <GL/glut.h>
-#include "Renderer.h"
+
 #include <iostream>
 #include<map>
 #include <queue>
@@ -10,8 +9,7 @@
 #include <string>
 #include <iostream>
 
-//you need to change that to your local folder
-#include <C:\project with Aiden and Lukas\Project\Dijekstra\src\dirent.h>
+#include "dirent.h"
 #include <errno.h>
 #include <math.h>
 #include <sstream>
@@ -21,23 +19,11 @@ using namespace XMeshLib;
 
 using namespace std;
 
-Renderer theRenderer;
-std::map<Vertex*, double>renderingscalarmap;
+
+
 Mesh *srcMesh = new Mesh;
 
-std::map< Edge *, double> HEWeights;
-std::map<Vertex*, double> HWeightSums;
 
-
-std::map<Halfedge*, double> EWeights;
-std::map<Vertex*, double> WeightSums;
-
-static double multiplier = 1;
-static double shift = 0;
-///////////
-
-
-//my own functions
 
 double vertextomeshdistance(std::vector<Vertex*> submesh, Vertex * v);
 Vertex * meshdistance(Mesh *mesh, std::vector<Vertex*>  submesh);
@@ -285,15 +271,15 @@ int getdir(string dir, vector<string> &files)
 
 
 int main(int argc, char **argv) {
-	
-	
-//	if(!srcMesh->read("eight.m")) {
-//		delete srcMesh;
-//		exit(-1);
-//	};
 
 
-	string absolute_path = "C:/project with Aiden and Lukas/Project/Dijekstra/src/"; //PATH SPECIFIC
+	//	if(!srcMesh->read("eight.m")) {
+	//		delete srcMesh;
+	//		exit(-1);
+	//	};
+
+
+	string absolute_path = "C:/project with Aiden and Lukas/Project/Dijekstra/src/landmark_selection/landmark_selection/"; //PATH SPECIFIC
 
 	string dir = string(absolute_path + "Meshs");   //PATH SPECIFIC
 	vector<string> files = vector<string>();
@@ -305,7 +291,7 @@ int main(int argc, char **argv) {
 
 		Mesh *srcMesh = new Mesh;
 
-	
+
 
 
 		string full_file_in = absolute_path + "Meshs/" + files[f];   //PATH SPECIFIC
@@ -319,7 +305,7 @@ int main(int argc, char **argv) {
 			exit(-1);
 		}
 
-		std::vector<Vertex*> landmarkmesh = landmark(srcMesh,8);
+		std::vector<Vertex*> landmarkmesh = landmark(srcMesh, 8);
 
 
 		for (int i = 0; i < 2; i++)
@@ -344,10 +330,12 @@ int main(int argc, char **argv) {
 		srcMesh->clear();
 
 	}
+
+	delete srcMesh; srcMesh = NULL;
 	return 0;
 
 
-	
+
 
 }
 
@@ -372,7 +360,7 @@ double vertextomeshdistance(std::vector<Vertex*> submesh, Vertex * v)
 Vertex * meshdistance(Mesh *mesh, std::vector<Vertex*> submesh)
 {
 	Vertex *outV = submesh[0];
-	float d = -INFINITY;
+	double d = -INFINITY;
 	for (MeshVertexIterator vvit(mesh); !vvit.end(); ++vvit)
 	{
 		Vertex *v = *vvit;

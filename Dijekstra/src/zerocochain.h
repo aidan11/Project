@@ -1,13 +1,12 @@
 #ifndef ZEROCOCHAIN_H_
 #define ZEROCOCHAIN_H_
 
-#include "../Core_Mesh/Mesh.h"
-#include "../Core_Mesh/Iterators.h"
+#include "Mesh.h"
+#include "Iterators.h"
 #include <vector>
 #include <queue>
 #include <map>
 #include <cstdlib>
-#include <GL/glut.h>
 #include <cstdlib>
 #include <iostream>
 #include <math.h>

@@ -1,8 +1,8 @@
 #ifndef SHORTESTPATH_H_
 #define SHORTESTPATH_H_
 
-#include "../Core_Mesh/Mesh.h"
-#include "../Core_Mesh/Iterators.h"
+#include "Mesh.h"
+#include "Iterators.h"
 #include <vector>
 #include <queue>
 #include <map>
